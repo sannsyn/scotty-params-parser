@@ -1,15 +1,15 @@
 name:
-  scotty-params-parser
+  scotty-query-parser
 version:
-  0.1
+  0.2
 synopsis:
-  Get query parameters parser abstraction for "scotty"
+  HTTP-request's query parameters parser abstraction for "scotty"
 category:
   Web, Parser
 homepage:
-  https://github.com/sannsyn/scotty-params-parser 
+  https://github.com/sannsyn/scotty-query-parser 
 bug-reports:
-  https://github.com/sannsyn/scotty-params-parser/issues 
+  https://github.com/sannsyn/scotty-query-parser/issues 
 author:
   Nikita Volkov <nikita.y.volkov@mail.ru>
 maintainer:
@@ -30,7 +30,7 @@ source-repository head
   type:
     git
   location:
-    git://github.com/sannsyn/scotty-params-parser.git
+    git://github.com/sannsyn/scotty-query-parser.git
 
 
 library
@@ -42,7 +42,7 @@ library
     Haskell2010
   other-modules:
   exposed-modules:
-    Scotty.ParamsParser
+    Scotty.QueryParser
   build-depends:
     --
     scotty >= 0.11 && < 0.12,

@@ -1,6 +1,6 @@
 -- |
 -- A DSL for parsing of an HTTP request query parameters.
-module Scotty.ParamsParser
+module Scotty.QueryParser
 (
   Params,
   run,
