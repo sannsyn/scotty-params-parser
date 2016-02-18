@@ -1,7 +1,7 @@
 name:
   scotty-params-parser
 version:
-  0.3
+  0.4
 synopsis:
   HTTP-request's query parameters parser abstraction for "scotty"
 category:
@@ -42,7 +42,7 @@ library
     Haskell2010
   other-modules:
   exposed-modules:
-    Scotty.QueryParser
+    Scotty.ParamsParser
   build-depends:
     --
     scotty >= 0.11 && < 0.12,
