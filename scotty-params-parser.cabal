@@ -1,15 +1,15 @@
 name:
-  scotty-query-parser
+  scotty-params-parser
 version:
-  0.2
+  0.3
 synopsis:
   HTTP-request's query parameters parser abstraction for "scotty"
 category:
   Web, Parser
 homepage:
-  https://github.com/sannsyn/scotty-query-parser 
+  https://github.com/sannsyn/scotty-params-parser 
 bug-reports:
-  https://github.com/sannsyn/scotty-query-parser/issues 
+  https://github.com/sannsyn/scotty-params-parser/issues 
 author:
   Nikita Volkov <nikita.y.volkov@mail.ru>
 maintainer:
@@ -30,7 +30,7 @@ source-repository head
   type:
     git
   location:
-    git://github.com/sannsyn/scotty-query-parser.git
+    git://github.com/sannsyn/scotty-params-parser.git
 
 
 library
