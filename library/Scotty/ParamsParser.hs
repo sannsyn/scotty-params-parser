@@ -4,9 +4,7 @@ module Scotty.ParamsParser
 (
   Params,
   run,
-  lookup,
   param,
-  Param,
 )
 where
 
@@ -18,41 +16,38 @@ import qualified Web.Scotty.Trans as Scotty
 import qualified Success.Pure as Success
 import qualified Data.HashMap.Strict as HashMap
 import qualified Data.Text.Lazy
+import qualified Data.Text
+import qualified Matcher
 
 
 -- |
 -- A multiple parameters parser.
 newtype Params a =
-  Params (ReaderT (HashMap.HashMap Text Text) (Success.Success Text) a)
+  Params (Matcher.Matcher (HashMap.HashMap Text Text) a)
   deriving (Functor, Applicative, Alternative, Monad, MonadPlus)
 
 run :: (Scotty.ScottyError e, Monad m) => Params a -> Scotty.ActionT e m a
-run (Params (ReaderT success')) =
+run (Params matcher) =
   Scotty.params >>= onParams
   where
     onParams params =
-      either (Scotty.raise . Scotty.stringError . Data.Text.Lazy.unpack . fromMaybe "") return $
-      Success.asEither $
-      success' $
+      either (Scotty.raise . Scotty.stringError . Data.Text.unpack) return $
+      Matcher.run matcher $
       HashMap.fromList params
 
 lookup :: Text -> Params Text
 lookup name =
-  Params $ ReaderT $ \hashMap ->
-    maybe (Success.failure $ "No parameter named" <> name) Success.success $
+  Params $
+  Matcher.converts $
+  \hashMap ->
+    maybe (Left ("No parameter named" <> Data.Text.Lazy.toStrict name)) Right $
     HashMap.lookup name hashMap
 
 -- |
--- Given a parameter parser and name attempts to get it.
-param :: Param a -> Text -> Params a
-param paramParser name =
-  lookup name >>= onText
-  where
-    onText text =
-      Params $ ReaderT $ const $ either Success.failure Success.success $ paramParser text
-
--- |
--- A single parameter parser.
-type Param a =
-  Text -> Either Text a
+-- Given a parameter name and a parser attempts to get it.
+param :: Text -> Matcher.Matcher Text a -> Params a
+param name matcher2 =
+  case lookup name of
+    Params matcher1 ->
+      Params (matcher2 . matcher1)
 
