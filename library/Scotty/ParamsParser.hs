@@ -26,7 +26,7 @@ newtype Params a =
   Params (ReaderT (HashMap.HashMap Text Text) (Success.Success Text) a)
   deriving (Functor, Applicative, Alternative, Monad, MonadPlus)
 
-run :: Params a -> forall m e. (Scotty.ScottyError e, Monad m) => Scotty.ActionT e m a
+run :: (Scotty.ScottyError e, Monad m) => Params a -> Scotty.ActionT e m a
 run (Params (ReaderT success')) =
   Scotty.params >>= onParams
   where
