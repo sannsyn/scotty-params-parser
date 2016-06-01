@@ -40,7 +40,7 @@ lookup name =
   Params $
   Matcher.converts $
   \hashMap ->
-    maybe (Left ("No parameter named" <> Data.Text.Lazy.toStrict name)) Right $
+    maybe (Left ("No parameter named \"" <> Data.Text.Lazy.toStrict name <> "\"")) Right $
     HashMap.lookup name hashMap
 
 -- |
